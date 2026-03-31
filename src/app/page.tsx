@@ -113,7 +113,7 @@ export default function Dashboard() {
   const filtered = useMemo(() => {
     const list = Array.isArray(feedback) ? feedback : [];
     return list.filter(x => {
-      const matchQ = !search || [x.name, x.roll, x.text, x.goal, x.missing, x.prioritize]
+      const matchQ = !search || [x.name, x.roll, x.text, x.goal, x.missing, x.prioritize, x.sentiment]
         .some(v => String(v || "").toLowerCase().includes(search.toLowerCase()));
       const matchF = filter === "All" || x.sentiment === filter;
       return matchQ && matchF;
@@ -619,8 +619,10 @@ function FeedCard({ item }: any) {
             <p className="font-black text-white text-sm leading-none truncate">{name || "Anonymous"}</p>
             <div className="flex flex-wrap gap-1.5 mt-1.5">
               <span className="px-2 py-0.5 rounded-md bg-cyan-500/10 text-cyan-400 text-[9px] font-bold">#{roll || "N/A"}</span>
-              <span className={`px-2 py-0.5 rounded-md text-[9px] font-bold ${badgeBg}`}>{sentiment}</span>
-              <span className="px-2 py-0.5 rounded-md bg-white/5 text-gray-300 text-[9px] font-bold">{Number(score || 0).toFixed(3)}</span>
+              <div className={`px-2 py-0.5 rounded-md text-[9px] font-black uppercase tracking-tighter ${badgeBg}`}>
+                {sentiment}
+              </div>
+              <span className="px-2 py-0.5 rounded-md bg-white/5 text-gray-300 text-[9px] font-bold">Score: {Number(score || 0).toFixed(3)}</span>
             </div>
           </div>
         </div>
