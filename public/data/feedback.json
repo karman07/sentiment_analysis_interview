@@ -19,7 +19,7 @@
     "sentiment": "Positive",
     "score": 0.59,
     "date": "2026-03-26",
-    "missing": NaN,
+    "missing": "",
     "prioritize": "Better, more actionable feedback",
     "goal": "Internship prep"
   },
@@ -187,7 +187,7 @@
     "sentiment": "Negative",
     "score": -0.6,
     "date": "2026-03-28",
-    "missing": NaN,
+    "missing": "",
     "prioritize": "Better, more actionable feedback",
     "goal": "Placements (Full-time job prep)"
   },
@@ -223,7 +223,7 @@
     "sentiment": "Negative",
     "score": -0.6,
     "date": "2026-03-28",
-    "missing": NaN,
+    "missing": "",
     "prioritize": "More realistic/human-like interview simulation",
     "goal": "Placements (Full-time job prep)"
   },
@@ -259,7 +259,7 @@
     "sentiment": "Positive",
     "score": 0.6,
     "date": "2026-03-28",
-    "missing": NaN,
+    "missing": "",
     "prioritize": "More realistic/human-like interview simulation",
     "goal": "General practice/skill improvement"
   },
@@ -331,7 +331,7 @@
     "sentiment": "Negative",
     "score": -0.6,
     "date": "2026-03-28",
-    "missing": NaN,
+    "missing": "",
     "prioritize": "Performance/speed and stability",
     "goal": "Placements (Full-time job prep)"
   },
@@ -415,7 +415,7 @@
     "sentiment": "Positive",
     "score": 0.6,
     "date": "2026-03-29",
-    "missing": NaN,
+    "missing": "",
     "prioritize": "More realistic/human-like interview simulation",
     "goal": "Placements (Full-time job prep)"
   },
@@ -571,7 +571,7 @@
     "sentiment": "Negative",
     "score": -0.32,
     "date": "2026-03-29",
-    "missing": NaN,
+    "missing": "",
     "prioritize": "More realistic/human-like interview simulation",
     "goal": "General practice/skill improvement"
   },
@@ -667,7 +667,7 @@
     "sentiment": "Positive",
     "score": 0.6,
     "date": "2026-03-29",
-    "missing": NaN,
+    "missing": "",
     "prioritize": "Performance/speed and stability",
     "goal": "Internship prep"
   },
@@ -715,7 +715,7 @@
     "sentiment": "Positive",
     "score": 0.6,
     "date": "2026-03-29",
-    "missing": NaN,
+    "missing": "",
     "prioritize": "Performance/speed and stability",
     "goal": "Placements (Full-time job prep)"
   },
@@ -775,7 +775,7 @@
     "sentiment": "Positive",
     "score": 0.599,
     "date": "2026-03-29",
-    "missing": NaN,
+    "missing": "",
     "prioritize": "More realistic/human-like interview simulation",
     "goal": "Placements (Full-time job prep)"
   },
@@ -799,7 +799,7 @@
     "sentiment": "Negative",
     "score": -0.557,
     "date": "2026-03-29",
-    "missing": NaN,
+    "missing": "",
     "prioritize": "Better question quality/specificity",
     "goal": "Placements (Full-time job prep)"
   },
@@ -847,7 +847,7 @@
     "sentiment": "Positive",
     "score": 0.599,
     "date": "2026-03-29",
-    "missing": NaN,
+    "missing": "",
     "prioritize": "Better, more actionable feedback",
     "goal": "Placements (Full-time job prep)"
   },
@@ -871,7 +871,7 @@
     "sentiment": "Positive",
     "score": 0.6,
     "date": "2026-03-29",
-    "missing": NaN,
+    "missing": "",
     "prioritize": "Better question quality/specificity",
     "goal": "Internship prep"
   },
@@ -883,7 +883,7 @@
     "sentiment": "Positive",
     "score": 0.596,
     "date": "2026-03-29",
-    "missing": NaN,
+    "missing": "",
     "prioritize": "Performance/speed and stability",
     "goal": "Internship prep"
   },
@@ -907,7 +907,7 @@
     "sentiment": "Positive",
     "score": 0.598,
     "date": "2026-03-29",
-    "missing": NaN,
+    "missing": "",
     "prioritize": "More realistic/human-like interview simulation",
     "goal": "General practice/skill improvement"
   },
@@ -943,7 +943,7 @@
     "sentiment": "Negative",
     "score": -0.583,
     "date": "2026-03-29",
-    "missing": NaN,
+    "missing": "",
     "prioritize": "More realistic/human-like interview simulation",
     "goal": "Just exploring the product features"
   },
@@ -1075,7 +1075,7 @@
     "sentiment": "Positive",
     "score": 0.598,
     "date": "2026-03-30",
-    "missing": NaN,
+    "missing": "",
     "prioritize": "Better, more actionable feedback",
     "goal": "Placements (Full-time job prep)"
   },
@@ -1111,7 +1111,7 @@
     "sentiment": "Negative",
     "score": -0.6,
     "date": "2026-03-30",
-    "missing": NaN,
+    "missing": "",
     "prioritize": "Performance/speed and stability",
     "goal": "Internship prep"
   },
@@ -1207,7 +1207,7 @@
     "sentiment": "Negative",
     "score": -0.599,
     "date": "2026-03-30",
-    "missing": NaN,
+    "missing": "",
     "prioritize": "More realistic/human-like interview simulation",
     "goal": "Internship prep"
   },
@@ -1219,7 +1219,7 @@
     "sentiment": "Positive",
     "score": 0.597,
     "date": "2026-03-30",
-    "missing": NaN,
+    "missing": "",
     "prioritize": "Performance/speed and stability",
     "goal": "Placements (Full-time job prep)"
   },
@@ -1303,7 +1303,7 @@
     "sentiment": "Positive",
     "score": 0.598,
     "date": "2026-03-30",
-    "missing": NaN,
+    "missing": "",
     "prioritize": "Performance/speed and stability",
     "goal": "Placements (Full-time job prep)"
   },
@@ -1327,7 +1327,7 @@
     "sentiment": "Negative",
     "score": -0.599,
     "date": "2026-03-30",
-    "missing": NaN,
+    "missing": "",
     "prioritize": "More realistic/human-like interview simulation",
     "goal": "Internship prep"
   },
@@ -1351,7 +1351,7 @@
     "sentiment": "Negative",
     "score": -0.593,
     "date": "2026-03-30",
-    "missing": NaN,
+    "missing": "",
     "prioritize": "Performance/speed and stability",
     "goal": "Placements (Full-time job prep)"
   },
@@ -1383,11 +1383,11 @@
     "name": "Harshita Goyal",
     "roll": 102303491,
     "choice": "Maybe, depending on improvements",
-    "text": NaN,
+    "text": "",
     "sentiment": "Neutral",
     "score": 0.0,
     "date": "2026-03-30",
-    "missing": NaN,
+    "missing": "",
     "prioritize": "Better question quality/specificity",
     "goal": "Placements (Full-time job prep)"
   },
@@ -1399,7 +1399,7 @@
     "sentiment": "Positive",
     "score": 0.6,
     "date": "2026-03-30",
-    "missing": NaN,
+    "missing": "",
     "prioritize": "More realistic/human-like interview simulation",
     "goal": "Placements (Full-time job prep)"
   },
@@ -1411,7 +1411,7 @@
     "sentiment": "Positive",
     "score": 0.6,
     "date": "2026-03-30",
-    "missing": NaN,
+    "missing": "",
     "prioritize": "More realistic/human-like interview simulation",
     "goal": "Placements (Full-time job prep)"
   },
@@ -1423,7 +1423,7 @@
     "sentiment": "Negative",
     "score": -0.598,
     "date": "2026-03-30",
-    "missing": NaN,
+    "missing": "",
     "prioritize": "UI/UX (user interface and experience)",
     "goal": "Placements (Full-time job prep)"
   },
@@ -1495,7 +1495,7 @@
     "sentiment": "Positive",
     "score": 0.6,
     "date": "2026-03-30",
-    "missing": NaN,
+    "missing": "",
     "prioritize": "Better, more actionable feedback",
     "goal": "Placements (Full-time job prep)"
   },
@@ -1507,7 +1507,7 @@
     "sentiment": "Positive",
     "score": 0.6,
     "date": "2026-03-30",
-    "missing": NaN,
+    "missing": "",
     "prioritize": "Better, more actionable feedback",
     "goal": "Placements (Full-time job prep)"
   },
@@ -1543,7 +1543,7 @@
     "sentiment": "Positive",
     "score": 0.598,
     "date": "2026-03-30",
-    "missing": NaN,
+    "missing": "",
     "prioritize": "Performance/speed and stability",
     "goal": "Internship prep"
   },
@@ -1567,7 +1567,7 @@
     "sentiment": "Positive",
     "score": 0.594,
     "date": "2026-03-30",
-    "missing": NaN,
+    "missing": "",
     "prioritize": "More realistic/human-like interview simulation",
     "goal": "Internship prep"
   },
@@ -1591,7 +1591,7 @@
     "sentiment": "Positive",
     "score": 0.6,
     "date": "2026-03-30",
-    "missing": NaN,
+    "missing": "",
     "prioritize": "UI/UX (user interface and experience)",
     "goal": "Placements (Full-time job prep)"
   },
@@ -1723,7 +1723,7 @@
     "sentiment": "Negative",
     "score": -0.6,
     "date": "2026-03-30",
-    "missing": NaN,
+    "missing": "",
     "prioritize": "Performance/speed and stability",
     "goal": "Internship prep"
   },
@@ -1759,7 +1759,7 @@
     "sentiment": "Positive",
     "score": 0.6,
     "date": "2026-03-30",
-    "missing": NaN,
+    "missing": "",
     "prioritize": "Better, more actionable feedback",
     "goal": "Just exploring the product features"
   },
@@ -1783,7 +1783,7 @@
     "sentiment": "Positive",
     "score": 0.598,
     "date": "2026-03-30",
-    "missing": NaN,
+    "missing": "",
     "prioritize": "More realistic/human-like interview simulation",
     "goal": "Internship prep"
   },
@@ -1891,7 +1891,7 @@
     "sentiment": "Positive",
     "score": 0.599,
     "date": "2026-03-30",
-    "missing": NaN,
+    "missing": "",
     "prioritize": "More realistic/human-like interview simulation",
     "goal": "Internship prep"
   },
@@ -1975,7 +1975,7 @@
     "sentiment": "Positive",
     "score": 0.6,
     "date": "2026-03-30",
-    "missing": NaN,
+    "missing": "",
     "prioritize": "Better question quality/specificity",
     "goal": "Placements (Full-time job prep)"
   },
@@ -2011,7 +2011,7 @@
     "sentiment": "Positive",
     "score": 0.6,
     "date": "2026-03-30",
-    "missing": NaN,
+    "missing": "",
     "prioritize": "Performance/speed and stability",
     "goal": "Internship prep"
   },
@@ -2023,7 +2023,7 @@
     "sentiment": "Negative",
     "score": -0.529,
     "date": "2026-03-30",
-    "missing": NaN,
+    "missing": "",
     "prioritize": "Performance/speed and stability",
     "goal": "Internship prep"
   },
@@ -2047,7 +2047,7 @@
     "sentiment": "Positive",
     "score": 0.599,
     "date": "2026-03-30",
-    "missing": NaN,
+    "missing": "",
     "prioritize": "Performance/speed and stability",
     "goal": "General practice/skill improvement"
   },
@@ -2059,7 +2059,7 @@
     "sentiment": "Negative",
     "score": -0.6,
     "date": "2026-03-30",
-    "missing": NaN,
+    "missing": "",
     "prioritize": "More realistic/human-like interview simulation",
     "goal": "Internship prep"
   },
@@ -2083,7 +2083,7 @@
     "sentiment": "Positive",
     "score": 0.6,
     "date": "2026-03-30",
-    "missing": NaN,
+    "missing": "",
     "prioritize": "Better question quality/specificity",
     "goal": "Internship prep"
   },
@@ -2119,7 +2119,7 @@
     "sentiment": "Positive",
     "score": 0.6,
     "date": "2026-03-30",
-    "missing": NaN,
+    "missing": "",
     "prioritize": "UI/UX (user interface and experience)",
     "goal": "General practice/skill improvement"
   },
@@ -2143,7 +2143,7 @@
     "sentiment": "Positive",
     "score": 0.6,
     "date": "2026-03-30",
-    "missing": NaN,
+    "missing": "",
     "prioritize": "Performance/speed and stability",
     "goal": "Placements (Full-time job prep)"
   },
@@ -2167,7 +2167,7 @@
     "sentiment": "Positive",
     "score": 0.599,
     "date": "2026-03-30",
-    "missing": NaN,
+    "missing": "",
     "prioritize": "Better, more actionable feedback",
     "goal": "Placements (Full-time job prep)"
   },
@@ -2191,7 +2191,7 @@
     "sentiment": "Negative",
     "score": -0.305,
     "date": "2026-03-30",
-    "missing": NaN,
+    "missing": "",
     "prioritize": "Better, more actionable feedback",
     "goal": "Internship prep"
   },
@@ -2203,7 +2203,7 @@
     "sentiment": "Positive",
     "score": 0.567,
     "date": "2026-03-30",
-    "missing": NaN,
+    "missing": "",
     "prioritize": "Better question quality/specificity",
     "goal": "Internship prep"
   },
@@ -2359,7 +2359,7 @@
     "sentiment": "Positive",
     "score": 0.6,
     "date": "2026-03-30",
-    "missing": NaN,
+    "missing": "",
     "prioritize": "Better, more actionable feedback",
     "goal": "Internship prep"
   },
@@ -2407,7 +2407,7 @@
     "sentiment": "Positive",
     "score": 0.52,
     "date": "2026-03-30",
-    "missing": NaN,
+    "missing": "",
     "prioritize": "UI/UX (user interface and experience)",
     "goal": "Internship prep"
   },
@@ -2515,7 +2515,7 @@
     "sentiment": "Negative",
     "score": -0.599,
     "date": "2026-03-30",
-    "missing": NaN,
+    "missing": "",
     "prioritize": "Performance/speed and stability",
     "goal": "Placements (Full-time job prep)"
   },
@@ -2599,7 +2599,7 @@
     "sentiment": "Negative",
     "score": -0.56,
     "date": "2026-03-30",
-    "missing": NaN,
+    "missing": "",
     "prioritize": "More realistic/human-like interview simulation",
     "goal": "Placements (Full-time job prep)"
   },
@@ -2779,7 +2779,7 @@
     "sentiment": "Negative",
     "score": -0.6,
     "date": "2026-03-30",
-    "missing": NaN,
+    "missing": "",
     "prioritize": "Performance/speed and stability",
     "goal": "General practice/skill improvement"
   },
@@ -2875,7 +2875,7 @@
     "sentiment": "Positive",
     "score": 0.6,
     "date": "2026-03-30",
-    "missing": NaN,
+    "missing": "",
     "prioritize": "More realistic/human-like interview simulation",
     "goal": "Placements (Full-time job prep)"
   },
@@ -2887,7 +2887,7 @@
     "sentiment": "Negative",
     "score": -0.598,
     "date": "2026-03-30",
-    "missing": NaN,
+    "missing": "",
     "prioritize": "UI/UX (user interface and experience)",
     "goal": "Internship prep"
   },
@@ -3079,7 +3079,7 @@
     "sentiment": "Positive",
     "score": 0.6,
     "date": "2026-03-30",
-    "missing": NaN,
+    "missing": "",
     "prioritize": "Better, more actionable feedback",
     "goal": "Internship prep"
   },
@@ -3187,7 +3187,7 @@
     "sentiment": "Positive",
     "score": 0.574,
     "date": "2026-03-30",
-    "missing": NaN,
+    "missing": "",
     "prioritize": "Better, more actionable feedback",
     "goal": "General practice/skill improvement"
   },
@@ -3199,7 +3199,7 @@
     "sentiment": "Negative",
     "score": -0.6,
     "date": "2026-03-30",
-    "missing": NaN,
+    "missing": "",
     "prioritize": "Better question quality/specificity",
     "goal": "Placements (Full-time job prep)"
   },
@@ -3271,7 +3271,7 @@
     "sentiment": "Positive",
     "score": 0.6,
     "date": "2026-03-30",
-    "missing": NaN,
+    "missing": "",
     "prioritize": "UI/UX (user interface and experience)",
     "goal": "Internship prep"
   },
@@ -3283,7 +3283,7 @@
     "sentiment": "Negative",
     "score": -0.6,
     "date": "2026-03-30",
-    "missing": NaN,
+    "missing": "",
     "prioritize": "Performance/speed and stability",
     "goal": "Placements (Full-time job prep)"
   },
@@ -3307,7 +3307,7 @@
     "sentiment": "Negative",
     "score": -0.6,
     "date": "2026-03-31",
-    "missing": NaN,
+    "missing": "",
     "prioritize": "More realistic/human-like interview simulation",
     "goal": "Placements (Full-time job prep)"
   },
@@ -3391,7 +3391,7 @@
     "sentiment": "Positive",
     "score": 0.6,
     "date": "2026-03-31",
-    "missing": NaN,
+    "missing": "",
     "prioritize": "Better, more actionable feedback",
     "goal": "Internship prep"
   },
@@ -3403,7 +3403,7 @@
     "sentiment": "Positive",
     "score": 0.597,
     "date": "2026-03-31",
-    "missing": NaN,
+    "missing": "",
     "prioritize": "More realistic/human-like interview simulation",
     "goal": "Placements (Full-time job prep)"
   },
@@ -3427,7 +3427,7 @@
     "sentiment": "Positive",
     "score": 0.6,
     "date": "2026-03-31",
-    "missing": NaN,
+    "missing": "",
     "prioritize": "Better, more actionable feedback",
     "goal": "General practice/skill improvement"
   },
@@ -3439,7 +3439,7 @@
     "sentiment": "Positive",
     "score": 0.599,
     "date": "2026-03-31",
-    "missing": NaN,
+    "missing": "",
     "prioritize": "More realistic/human-like interview simulation",
     "goal": "Placements (Full-time job prep)"
   },
@@ -3463,7 +3463,7 @@
     "sentiment": "Negative",
     "score": -0.6,
     "date": "2026-03-31",
-    "missing": NaN,
+    "missing": "",
     "prioritize": "Performance/speed and stability",
     "goal": "Internship prep"
   },
@@ -3511,7 +3511,7 @@
     "sentiment": "Positive",
     "score": 0.6,
     "date": "2026-03-31",
-    "missing": NaN,
+    "missing": "",
     "prioritize": "Better question quality/specificity",
     "goal": "Placements (Full-time job prep)"
   },
@@ -3535,7 +3535,7 @@
     "sentiment": "Positive",
     "score": 0.6,
     "date": "2026-03-31",
-    "missing": NaN,
+    "missing": "",
     "prioritize": "Better, more actionable feedback",
     "goal": "General practice/skill improvement"
   },
@@ -3631,7 +3631,7 @@
     "sentiment": "Negative",
     "score": -0.599,
     "date": "2026-03-31",
-    "missing": NaN,
+    "missing": "",
     "prioritize": "Better question quality/specificity",
     "goal": "Internship prep"
   },
@@ -3691,7 +3691,7 @@
     "sentiment": "Negative",
     "score": -0.599,
     "date": "2026-03-31",
-    "missing": NaN,
+    "missing": "",
     "prioritize": "Performance/speed and stability",
     "goal": "Internship prep"
   },
@@ -3835,7 +3835,7 @@
     "sentiment": "Positive",
     "score": 0.6,
     "date": "2026-03-31",
-    "missing": NaN,
+    "missing": "",
     "prioritize": "More realistic/human-like interview simulation",
     "goal": "Placements (Full-time job prep)"
   },
@@ -3907,7 +3907,7 @@
     "sentiment": "Positive",
     "score": 0.6,
     "date": "2026-03-31",
-    "missing": NaN,
+    "missing": "",
     "prioritize": "More realistic/human-like interview simulation",
     "goal": "General practice/skill improvement"
   },
@@ -3931,7 +3931,7 @@
     "sentiment": "Positive",
     "score": 0.6,
     "date": "2026-03-31",
-    "missing": NaN,
+    "missing": "",
     "prioritize": "UI/UX (user interface and experience)",
     "goal": "Internship prep"
   },
@@ -3955,7 +3955,7 @@
     "sentiment": "Negative",
     "score": -0.6,
     "date": "2026-03-31",
-    "missing": NaN,
+    "missing": "",
     "prioritize": "More realistic/human-like interview simulation",
     "goal": "Placements (Full-time job prep)"
   },
@@ -3991,7 +3991,7 @@
     "sentiment": "Positive",
     "score": 0.599,
     "date": "2026-03-31",
-    "missing": NaN,
+    "missing": "",
     "prioritize": "Better, more actionable feedback",
     "goal": "Internship prep"
   },
@@ -4039,7 +4039,7 @@
     "sentiment": "Positive",
     "score": 0.6,
     "date": "2026-03-31",
-    "missing": NaN,
+    "missing": "",
     "prioritize": "Better question quality/specificity",
     "goal": "Internship prep"
   },
@@ -4051,7 +4051,7 @@
     "sentiment": "Negative",
     "score": -0.591,
     "date": "2026-03-31",
-    "missing": NaN,
+    "missing": "",
     "prioritize": "Better, more actionable feedback",
     "goal": "Internship prep"
   },
@@ -4075,7 +4075,7 @@
     "sentiment": "Positive",
     "score": 0.598,
     "date": "2026-03-31",
-    "missing": NaN,
+    "missing": "",
     "prioritize": "Better, more actionable feedback",
     "goal": "Internship prep"
   },
@@ -4267,7 +4267,7 @@
     "sentiment": "Positive",
     "score": 0.59,
     "date": "2026-03-31",
-    "missing": NaN,
+    "missing": "",
     "prioritize": "Better, more actionable feedback",
     "goal": "Placements (Full-time job prep)"
   },
