@@ -104,9 +104,9 @@ export default function Dashboard() {
     const list = Array.isArray(feedback) ? feedback : [];
     return {
       All:      list.length,
-      Positive: list.filter(x => x.Sentiment === "Positive").length,
-      Neutral:  list.filter(x => x.Sentiment === "Neutral").length,
-      Negative: list.filter(x => x.Sentiment === "Negative").length,
+      Positive: list.filter(x => x.sentiment === "Positive").length,
+      Neutral:  list.filter(x => x.sentiment === "Neutral").length,
+      Negative: list.filter(x => x.sentiment === "Negative").length,
     };
   }, [feedback]);
 
