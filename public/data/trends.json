@@ -1,0 +1,38 @@
+[
+  {
+    "Date": "2026-03-26",
+    "Negative": 2,
+    "Neutral": 0,
+    "Positive": 3
+  },
+  {
+    "Date": "2026-03-27",
+    "Negative": 2,
+    "Neutral": 0,
+    "Positive": 7
+  },
+  {
+    "Date": "2026-03-28",
+    "Negative": 10,
+    "Neutral": 0,
+    "Positive": 6
+  },
+  {
+    "Date": "2026-03-29",
+    "Negative": 21,
+    "Neutral": 0,
+    "Positive": 28
+  },
+  {
+    "Date": "2026-03-30",
+    "Negative": 85,
+    "Neutral": 1,
+    "Positive": 109
+  },
+  {
+    "Date": "2026-03-31",
+    "Negative": 32,
+    "Neutral": 1,
+    "Positive": 50
+  }
+]

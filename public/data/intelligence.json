@@ -1,0 +1,90 @@
+{
+  "top_issues": [
+    {
+      "issue": "interview",
+      "count": 70
+    },
+    {
+      "issue": "because",
+      "count": 35
+    },
+    {
+      "issue": "resume",
+      "count": 32
+    },
+    {
+      "issue": "platform",
+      "count": 27
+    },
+    {
+      "issue": "would",
+      "count": 25
+    },
+    {
+      "issue": "like",
+      "count": 22
+    }
+  ],
+  "top_recommendations": [
+    {
+      "recommendation": "interview",
+      "count": 422
+    },
+    {
+      "recommendation": "questions",
+      "count": 398
+    },
+    {
+      "recommendation": "specific",
+      "count": 232
+    },
+    {
+      "recommendation": "company",
+      "count": 231
+    },
+    {
+      "recommendation": "prep",
+      "count": 231
+    },
+    {
+      "recommendation": "amazon",
+      "count": 231
+    }
+  ],
+  "radar": [
+    {
+      "subject": "Relevance",
+      "A": 3.82,
+      "fullMark": 5
+    },
+    {
+      "subject": "Realism",
+      "A": 3.58,
+      "fullMark": 5
+    },
+    {
+      "subject": "Depth",
+      "A": 3.68,
+      "fullMark": 5
+    },
+    {
+      "subject": "Utility",
+      "A": 3.72,
+      "fullMark": 5
+    }
+  ],
+  "choice_score_avg": [
+    {
+      "choice": "Maybe, depending on improvements",
+      "avg": -0.259
+    },
+    {
+      "choice": "No, probably not",
+      "avg": -0.52
+    },
+    {
+      "choice": "Yes, definitely",
+      "avg": 0.414
+    }
+  ]
+}

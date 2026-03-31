@@ -1,0 +1,21 @@
+{
+  "total_responses": 357,
+  "avg_sentiment": 0.09,
+  "positive_count": 203,
+  "negative_count": 152,
+  "neutral_count": 2,
+  "positive_percentage": 56.9,
+  "negative_percentage": 42.6,
+  "neutral_percentage": 0.6,
+  "sentiment_std": 0.577,
+  "avg_relevance": 3.82,
+  "avg_realism": 3.58,
+  "avg_depth": 3.68,
+  "avg_utility": 3.72,
+  "net_promoter_estimate": 54,
+  "choice_distribution": {
+    "Yes, definitely": 191,
+    "Maybe, depending on improvements": 151,
+    "No, probably not": 15
+  }
+}

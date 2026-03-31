@@ -1,0 +1,95 @@
+{
+  "distribution": {
+    "Positive": 203,
+    "Negative": 152,
+    "Neutral": 2
+  },
+  "histogram": [
+    {
+      "range": "(-0.601, -0.48]",
+      "count": 141
+    },
+    {
+      "range": "(-0.48, -0.36]",
+      "count": 7
+    },
+    {
+      "range": "(-0.36, -0.24]",
+      "count": 4
+    },
+    {
+      "range": "(-0.24, -0.12]",
+      "count": 1
+    },
+    {
+      "range": "(-0.12, 0.0]",
+      "count": 1
+    },
+    {
+      "range": "(0.0, 0.12]",
+      "count": 0
+    },
+    {
+      "range": "(0.12, 0.24]",
+      "count": 0
+    },
+    {
+      "range": "(0.24, 0.36]",
+      "count": 1
+    },
+    {
+      "range": "(0.36, 0.48]",
+      "count": 2
+    },
+    {
+      "range": "(0.48, 0.6]",
+      "count": 200
+    }
+  ],
+  "highlights": {
+    "positive": [
+      {
+        "text": "Good software",
+        "SentimentScore": 0.5999
+      },
+      {
+        "text": "good platform",
+        "SentimentScore": 0.5999
+      },
+      {
+        "text": "It is really great and helpful because it emphasis on many things like technical depth, behavourial, verbal and non-verbal etc.",
+        "SentimentScore": 0.5999
+      },
+      {
+        "text": "Yes",
+        "SentimentScore": 0.5999
+      },
+      {
+        "text": "the product is great,especially the ai interview",
+        "SentimentScore": 0.5999
+      }
+    ],
+    "negative": [
+      {
+        "text": "Because I myself was not that much prepared for the interview practice",
+        "SentimentScore": -0.5999
+      },
+      {
+        "text": "The platform is very hard to navigate for a new user. Also the AI in the interviews is not upto the mark and has bugs",
+        "SentimentScore": -0.5999
+      },
+      {
+        "text": "because I feel like there is a lack of human touch when preparing with ai and lack of conciousness",
+        "SentimentScore": -0.5999
+      },
+      {
+        "text": "In my case I just gave one behavioral interview and somehow it reached the interview limit (which is 2 interviews) even though i had just given one , other than that, the ai took too long to process my answer and was not able to provide the next question",
+        "SentimentScore": -0.5999
+      },
+      {
+        "text": "resume uploading and rate limits dont work properly",
+        "SentimentScore": -0.5999
+      }
+    ]
+  }
+}

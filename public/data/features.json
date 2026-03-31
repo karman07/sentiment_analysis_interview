@@ -1,0 +1,116 @@
+{
+  "popular": [
+    {
+      "item": "AI interview simulation (realistic format)",
+      "count": 329
+    },
+    {
+      "item": "Resume analyis",
+      "count": 234
+    },
+    {
+      "item": "Feedback provided after responses (scoring",
+      "count": 157
+    },
+    {
+      "item": "tips)",
+      "count": 157
+    },
+    {
+      "item": "Role selection (e.g.",
+      "count": 100
+    },
+    {
+      "item": "Software Engineer",
+      "count": 100
+    },
+    {
+      "item": "Marketing Analyst)",
+      "count": 100
+    }
+  ],
+  "most_useful": [
+    {
+      "item": "AI interview simulation",
+      "count": 33
+    },
+    {
+      "item": "Resume analysis",
+      "count": 30
+    },
+    {
+      "item": "Resume Analysis",
+      "count": 24
+    },
+    {
+      "item": "resume analysis",
+      "count": 18
+    },
+    {
+      "item": "AI interview",
+      "count": 12
+    },
+    {
+      "item": "Resume analyis",
+      "count": 12
+    },
+    {
+      "item": "Ai interview",
+      "count": 11
+    },
+    {
+      "item": "tips)",
+      "count": 10
+    },
+    {
+      "item": "Feedback provided after responses",
+      "count": 10
+    },
+    {
+      "item": "Role selection",
+      "count": 9
+    }
+  ],
+  "requested": [
+    {
+      "item": "Company-specific interview prep/questions (e.g.",
+      "count": 231
+    },
+    {
+      "item": "for Amazon",
+      "count": 231
+    },
+    {
+      "item": "Microsoft)",
+      "count": 231
+    },
+    {
+      "item": "Detailed score breakdown across various soft and hard skills",
+      "count": 204
+    },
+    {
+      "item": "Real-time hints or guidance during the interview",
+      "count": 189
+    },
+    {
+      "item": "Model answers / sample excellent responses for questions",
+      "count": 166
+    },
+    {
+      "item": "Peer comparison / ranking based on scores",
+      "count": 94
+    },
+    {
+      "item": "Better analysis of the interview should be done for the feedback",
+      "count": 1
+    },
+    {
+      "item": "Resume score",
+      "count": 1
+    },
+    {
+      "item": "Resume specific questions",
+      "count": 1
+    }
+  ]
+}
