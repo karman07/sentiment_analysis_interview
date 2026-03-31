@@ -113,8 +113,9 @@ export default function Dashboard() {
   const filtered = useMemo(() => {
     const list = Array.isArray(feedback) ? feedback : [];
     return list.filter(x => {
-      const matchQ = !search || Object.values(x).some(v => String(v).toLowerCase().includes(search.toLowerCase()));
-      const matchF = filter === "All" || x.Sentiment === filter;
+      const matchQ = !search || [x.name, x.roll, x.text, x.goal, x.missing, x.prioritize]
+        .some(v => String(v || "").toLowerCase().includes(search.toLowerCase()));
+      const matchF = filter === "All" || x.sentiment === filter;
       return matchQ && matchF;
     });
   }, [feedback, search, filter]);
@@ -595,22 +596,11 @@ function Card({ title, subtitle, icon, children, cls="" }: any) {
   );
 }
 
-function FeedCard({ item, feedback }: any) {
-  const TEXT  = Object.keys(item).find(k => k.includes("Why did you choose")) || "";
-  const ROLL  = "Roll No.";
-  const NAME  = Object.keys(item).find(k => k === "Full Name") || "";
-  const CHOICE= Object.keys(item).find(k => k.includes("would you use")) || "";
+function FeedCard({ item }: any) {
+  const { name, roll, text, choice, sentiment, score, date, missing, prioritize, goal } = item;
 
-  const text    = item[TEXT]   || "No comment provided.";
-  const roll    = item[ROLL]   || "N/A";
-  const name    = item[NAME]   || "Participant";
-  const choice  = item[CHOICE] || "";
-  const sent    = item.Sentiment;
-  const score   = Number(item.SentimentScore || 0).toFixed(3);
-  const date    = item.Date || "";
-
-  const isPos = sent === "Positive";
-  const isNeg = sent === "Negative";
+  const isPos = sentiment === "Positive";
+  const isNeg = sentiment === "Negative";
 
   const borderColor = isPos ? "#22c55e30" : isNeg ? "#ef444430" : "#6b728030";
   const topColor    = isPos ? C.pos : isNeg ? C.neg : C.neu;
@@ -619,33 +609,55 @@ function FeedCard({ item, feedback }: any) {
   return (
     <div className="rounded-2xl border overflow-hidden transition-all hover:-translate-y-0.5 duration-200"
       style={{ borderColor, backgroundColor: "rgba(255,255,255,0.02)", borderTopWidth: 3, borderTopColor: topColor }}>
-      <div className="p-5">
+      <div className="p-5 flex flex-col h-full">
         {/* Header */}
         <div className="flex items-start gap-3 mb-4">
           <div className="w-10 h-10 rounded-xl flex items-center justify-center font-black text-sm border border-white/10 bg-gray-800/80 flex-shrink-0">
-            {name[0]?.toUpperCase()}
+            {String(name || "U")[0]?.toUpperCase()}
           </div>
           <div className="flex-grow min-w-0">
-            <p className="font-black text-white text-sm leading-none truncate">{name}</p>
+            <p className="font-black text-white text-sm leading-none truncate">{name || "Anonymous"}</p>
             <div className="flex flex-wrap gap-1.5 mt-1.5">
-              <span className="px-2 py-0.5 rounded-md bg-cyan-500/10 text-cyan-400 text-[9px] font-bold">#{roll}</span>
-              <span className={`px-2 py-0.5 rounded-md text-[9px] font-bold ${badgeBg}`}>{sent}</span>
-              <span className="px-2 py-0.5 rounded-md bg-white/5 text-gray-300 text-[9px] font-bold">{score}</span>
-              {choice && (
-                <span className="flex items-center gap-1 text-[9px] font-bold text-gray-300">
-                  {choice.toLowerCase().includes('yes') ? <CheckCircle2 size={9} className="text-green-500"/> : choice.toLowerCase().includes('no') ? <XCircle size={9} className="text-red-500"/> : <HelpCircle size={9} className="text-yellow-500"/>}
-                  {choice.split(' ')[0]}
-                </span>
-              )}
+              <span className="px-2 py-0.5 rounded-md bg-cyan-500/10 text-cyan-400 text-[9px] font-bold">#{roll || "N/A"}</span>
+              <span className={`px-2 py-0.5 rounded-md text-[9px] font-bold ${badgeBg}`}>{sentiment}</span>
+              <span className="px-2 py-0.5 rounded-md bg-white/5 text-gray-300 text-[9px] font-bold">{Number(score || 0).toFixed(3)}</span>
             </div>
           </div>
         </div>
 
-        {/* Text */}
-        <p className="text-[12px] leading-relaxed text-gray-200 italic">"{text}"</p>
+        {/* Choice Reason (Primary Text) */}
+        <div className="flex-grow">
+          <p className="text-[11px] text-gray-400 uppercase font-black tracking-wider mb-1">Reason for choice:</p>
+          <p className="text-[12px] leading-relaxed text-gray-100 italic">"{text || "No reason specified"}"</p>
+          
+          {goal && goal !== "nan" && (
+            <div className="mt-3">
+              <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest">Main Goal:</p>
+              <p className="text-[11px] text-gray-300 mt-1">{goal}</p>
+            </div>
+          )}
+
+          {missing && missing !== "nan" && (
+            <div className="mt-3 p-2 rounded-lg bg-red-500/5 border border-red-500/10">
+              <p className="text-[10px] text-red-400/70 font-bold uppercase tracking-widest flex items-center gap-1">
+                <AlertCircle size={10}/> Critical Feedback:
+              </p>
+              <p className="text-[11px] text-gray-300 mt-1">{missing}</p>
+            </div>
+          )}
+
+          {prioritize && prioritize !== "nan" && (
+            <div className="mt-3 p-2 rounded-lg bg-cyan-500/5 border border-cyan-500/10">
+              <p className="text-[10px] text-cyan-400/70 font-bold uppercase tracking-widest flex items-center gap-1">
+                <Target size={10}/> Priority Need:
+              </p>
+              <p className="text-[11px] text-gray-300 mt-1">{prioritize}</p>
+            </div>
+          )}
+        </div>
 
         {/* Score bar */}
-        <div className="mt-4 pt-3 border-t border-white/5">
+        <div className="mt-5 pt-3 border-t border-white/5">
           <div className="flex justify-between text-[9px] text-gray-400 mb-1 font-bold">
             <span>-1.0 Negative</span>
             <span>+1.0 Positive</span>
@@ -653,11 +665,20 @@ function FeedCard({ item, feedback }: any) {
           <div className="h-1.5 bg-gray-900 rounded-full relative overflow-visible">
             <div className="absolute top-1/2 left-1/2 -translate-x-0.5 -translate-y-1/2 w-0.5 h-3 bg-gray-700 rounded"/>
             <div className="h-full rounded-full" style={{
-              width: `${((Number(item.SentimentScore || 0) + 1) / 2) * 100}%`,
+              width: `${((Number(score || 0) + 1) / 2) * 100}%`,
               backgroundColor: topColor
             }}/>
           </div>
-          {date && <p className="text-[9px] text-gray-500 mt-1.5 text-right">{date}</p>}
+          
+          <div className="flex justify-between items-center mt-2.5">
+            {choice && (
+              <span className="flex items-center gap-1 text-[9px] font-bold text-gray-300">
+                {String(choice).toLowerCase().includes('yes') ? <CheckCircle2 size={10} className="text-green-500"/> : String(choice).toLowerCase().includes('no') ? <XCircle size={10} className="text-red-500"/> : <HelpCircle size={10} className="text-yellow-500"/>}
+                {String(choice).slice(0, 15)}...
+              </span>
+            )}
+            {date && <p className="text-[9px] text-gray-500 font-bold">{date}</p>}
+          </div>
         </div>
       </div>
     </div>

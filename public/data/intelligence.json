@@ -23,6 +23,22 @@
     {
       "issue": "like",
       "count": 22
+    },
+    {
+      "issue": "feedback",
+      "count": 20
+    },
+    {
+      "issue": "interviews",
+      "count": 20
+    },
+    {
+      "issue": "there",
+      "count": 20
+    },
+    {
+      "issue": "questions",
+      "count": 19
     }
   ],
   "top_recommendations": [
@@ -49,6 +65,22 @@
     {
       "recommendation": "amazon",
       "count": 231
+    },
+    {
+      "recommendation": "microsoft",
+      "count": 231
+    },
+    {
+      "recommendation": "score",
+      "count": 205
+    },
+    {
+      "recommendation": "detailed",
+      "count": 204
+    },
+    {
+      "recommendation": "breakdown",
+      "count": 204
     }
   ],
   "radar": [
