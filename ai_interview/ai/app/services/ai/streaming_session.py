@@ -1,76 +1,475 @@
 import time
-from typing import List
-from .gemini_client import GeminiClient
-from .schemas import Action
 import asyncio
-
+import httpx
+import random
+from typing import List, Dict, Any, Optional
+from app.core.config import settings
+from .gemini_client import GeminiClient
+from .langgraph_agent import InterviewState
+from .token_optimized_agent import InterviewGraph, _max_confusion_retries_for_duration, _max_questions_for_duration, _max_questions_per_topic
+from .schemas import Action
 
 class StreamingInterviewSession:
     def __init__(self, client: GeminiClient):
         self.client = client
-        self.context_summary = ""
-        self.history: List[dict] = []
-        self.ended = False
-        self.interview_type = "technical"
-        self.role = ""
-        self.company = ""
+        self.graph_engine = InterviewGraph(api_key=client.api_key) # Share API key
+        self.state: InterviewState = {
+            "history": [],
+            "performance_summary": "The interview is just starting.",
+            "context_summary": "",
+            "has_jd": False,
+            "last_user_input": None,
+            "current_evaluation": None,
+            "interview_type": "technical",
+            "time_context": "",
+            "role": "",
+            "company": "",
+            "ended": False,
+            "end_reason": "",
+            # New accuracy fields
+            "questions_asked": [],
+            "current_question": "",
+            "follow_up_hint": "",
+            "is_developer_role": False,
+            "coding_questions_asked": 0,
+            "last_question_was_coding": False,
+            "turn_number": 0,
+            "last_answer_type": "not_applicable",
+            "consecutive_non_answers": 0,
+            "consecutive_disengaged": 0,
+            "max_questions": 0,
+            "max_questions_per_topic": 0,
+            "max_confusion_retries": 2,
+            "topic_question_counts": {},
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "rag_tokens": 0,
+            "is_vertex": False,
+            "opening_line": "",
+            "closing_line": "",
+            "source_question_candidates": [],
+            "question_source_mode": "",
+        }
         self.start_time: float = 0.0
-        self.duration_limit: int = 0  # minutes, 0 = unlimited
+        self.duration_limit: int = 0
 
-    async def initialize_session(self, resume_text: str, jd_text: str, interview_type: str = "technical", role: str = "", company: str = "", duration: int = 0):
-        self.interview_type = interview_type
-        self.role = role
-        self.company = company
-        self.duration_limit = duration
+    @property
+    def history(self):
+        return self.state["history"]
+
+    @history.setter
+    def history(self, value):
+        self.state["history"] = value
+
+    @property
+    def ended(self):
+        return self.state["ended"]
+
+    @ended.setter
+    def ended(self, value):
+        self.state["ended"] = value
+
+    @property
+    def context_summary(self):
+        return self.state["context_summary"]
+
+    @context_summary.setter
+    def context_summary(self, value):
+        self.state["context_summary"] = value
+
+    @property
+    def interview_type(self):
+        return self.state["interview_type"]
+
+    @interview_type.setter
+    def interview_type(self, value):
+        self.state["interview_type"] = value
+
+    @property
+    def role(self):
+        return self.state["role"]
+
+    @role.setter
+    def role(self, value):
+        self.state["role"] = value
+
+    @property
+    def company(self):
+        return self.state["company"]
+
+    @company.setter
+    def company(self, value):
+        self.state["company"] = value
+
+    @property
+    def skills_remaining(self):
+        return self.state.get("skills_remaining", [])
+
+    @skills_remaining.setter
+    def skills_remaining(self, value):
+        self.state["skills_remaining"] = value
+
+    @property
+    def skills_covered(self):
+        return self.state.get("skills_covered", [])
+
+    @skills_covered.setter
+    def skills_covered(self, value):
+        self.state["skills_covered"] = value
+
+    @property
+    def performance_summary(self):
+        return self.state.get("performance_summary", "")
+
+    @performance_summary.setter
+    def performance_summary(self, value):
+        self.state["performance_summary"] = value
+
+    @property
+    def user_id(self):
+        return self.state.get("user_id")
+
+    @user_id.setter
+    def user_id(self, value):
+        self.state["user_id"] = value
+
+    @property
+    def session_id(self):
+        return self.state.get("session_id")
+
+    @session_id.setter
+    def session_id(self, value):
+        self.state["session_id"] = value
+
+    @property
+    def input_tokens(self):
+        return self.state.get("input_tokens", 0)
+
+    @input_tokens.setter
+    def input_tokens(self, value):
+        self.state["input_tokens"] = value
+
+    @property
+    def output_tokens(self):
+        return self.state.get("output_tokens", 0)
+
+    @output_tokens.setter
+    def output_tokens(self, value):
+        self.state["output_tokens"] = value
+
+    @property
+    def rag_tokens(self):
+        return self.state.get("rag_tokens", 0)
+
+    @rag_tokens.setter
+    def rag_tokens(self, value):
+        self.state["rag_tokens"] = value
+
+    @property
+    def is_vertex(self):
+        return self.state.get("is_vertex", False)
+
+    @is_vertex.setter
+    def is_vertex(self, value):
+        self.state["is_vertex"] = value
+
+
+    async def initialize_session(self, user_id: str, session_id: str, resume_text: str, jd_text: str, interview_type: str = "technical", role: str = "", company: str = "", duration: int = 0, candidate_name: str = ""):
         self.start_time = time.time()
-        self.context_summary = await self.client.summarize_context(resume_text, jd_text, interview_type, role, company)
-        self.ended = False
+        self.duration_limit = duration
+        max_q = _max_questions_for_duration(duration)
+        print(f"[Session] duration={duration}min → max_questions={max_q} max_confusion_retries={_max_confusion_retries_for_duration(duration)}")
+        
+        # ── Token accounting ────────────────────────────────────────────────────
+        self.input_tokens = 0
+        self.output_tokens = 0
+        self.rag_tokens = 0
+        self.is_vertex = bool(getattr(settings, 'GOOGLE_APPLICATION_CREDENTIALS', None))
+
+        # ── 1. Try to restore from resume context cache ─────────────────────────
+        #       This skips the 2 most expensive init LLM calls entirely.
+        from app.services.resume_cache import resume_cache
+        
+        cached = await resume_cache.get(resume_text, jd_text, interview_type, role, company)
+
+        if cached:
+            # ── CACHE HIT: restore summary + skills, zero LLM cost ──────────────
+            context         = cached["context_summary"]
+            initial_skills  = cached["skills"]
+            print(f"[Session] ✅ Resume context cache HIT — skipped summarize_context + skills extraction (~2,000–5,000 tokens saved)")
+        else:
+            # ── CACHE MISS: run LLM calls and cache the result ───────────────────
+            # 1a. Static context summarization
+            context, context_usage = await self.client.summarize_context(resume_text, jd_text, interview_type, role, company, candidate_name)
+            self.input_tokens  += context_usage.get("input_tokens", 0)
+            self.output_tokens += context_usage.get("output_tokens", 0)
+            
+            # 1b. Extract skills for structured tracking (priority-ordered, JD first)
+            _dev_hint = (
+                "Include specific technologies, languages, frameworks, and algorithms relevant "
+                "to the role. Be granular (e.g. 'React hooks', 'database indexing', 'REST API design')."
+                if interview_type in ("technical", "problem")
+                else "Include both technical and soft skills relevant to the role and interview type."
+            )
+            _jd_hint = (
+                "IMPORTANT: Skills explicitly listed in the JD Required Skills section MUST appear "
+                "first in your list — even if the candidate's resume is weak on them. These are the "
+                "gaps and requirements the interviewer MUST probe."
+                if jd_text and jd_text.strip()
+                else ""
+            )
+            skills_prompt = (
+                f"Based on this context summary, list the top 12 skills/topics to evaluate in a "
+                f"{interview_type} interview for a '{role or 'the role'}' candidate. "
+                f"{_dev_hint} "
+                f"{_jd_hint} "
+                f"Return ONLY a comma-separated list, ordered by importance (JD-required skills first), "
+                f"no numbering, no explanation.\n\n{context}"
+            )
+            skills_res = await self.client.client.aio.models.generate_content(model=self.client.model_name, contents=skills_prompt)
+            initial_skills = [s.strip() for s in skills_res.text.split(',') if s.strip()][:12]
+            
+            if hasattr(skills_res, 'usage_metadata'):
+                self.input_tokens  += getattr(skills_res.usage_metadata, 'prompt_token_count', 0)
+                self.output_tokens += getattr(skills_res.usage_metadata, 'candidates_token_count', 0)
+                print(f"[Session] skills extraction usage: in={getattr(skills_res.usage_metadata, 'prompt_token_count', 0)}, out={getattr(skills_res.usage_metadata, 'candidates_token_count', 0)}")
+
+            # ── Store in cache so future rounds are free ─────────────────────────
+            await resume_cache.set(resume_text, jd_text, interview_type, role, company, context, initial_skills)
+            print(f"[Session] 💾 Cached resume context for future rounds")
+
+
+        print(f"[Session] Total init tokens: in={self.input_tokens}, out={self.output_tokens}")
+
+        # ── Detect developer role for coding question enforcement ────────────────
+        _developer_keywords = (
+            "developer", "engineer", "programmer", "software", "backend", "frontend",
+            "full stack", "fullstack", "sde", "swe", "coder", "architect", "devops",
+            "data scientist", "ml engineer", "machine learning", "android", "ios",
+        )
+        role_lower = (role or "").lower()
+        is_developer = (
+            interview_type in ("technical", "problem")
+            and any(kw in role_lower for kw in _developer_keywords)
+        )
+        print(f"[Session] is_developer_role={is_developer} for role={role!r} type={interview_type!r}")
+
+        plan_opening_line = ""
+        plan_closing_line = ""
+        plan_candidates: list[dict[str, Any]] = []
+        question_source_mode = ""
+        must_ask_coding_question = interview_type in ("technical", "problem")
+
+        try:
+            from app.services.ai.source_interview_planner import source_interview_planner
+
+            def _build_plan_blocking() -> dict[str, Any]:
+                # build_plan performs synchronous network work internally (requests); run it off-loop.
+                return asyncio.run(
+                    source_interview_planner.build_plan(
+                        resume_text=resume_text,
+                        jd_text=jd_text,
+                        company_name=company,
+                        role=role,
+                        interview_type=interview_type,
+                        duration_minutes=duration,
+                    )
+                )
+
+            plan = await asyncio.wait_for(asyncio.to_thread(_build_plan_blocking), timeout=8.0)
+            plan_opening_line = str(plan.get("opening_line", "") or "")
+            plan_closing_line = str(plan.get("closing_line", "") or "")
+            plan_candidates = list(plan.get("question_candidates", []) or [])
+            if len(plan_candidates) > 1:
+                random.SystemRandom().shuffle(plan_candidates)
+            question_source_mode = str(plan.get("question_source_mode", "") or "")
+            must_ask_coding_question = bool(plan.get("needs_coding_question", must_ask_coding_question))
+
+            planner_topics = [str(topic) for topic in (plan.get("topics", []) or []) if str(topic).strip()]
+            if planner_topics:
+                initial_skills = list(dict.fromkeys([*planner_topics, *initial_skills]))[:12]
+
+            print(f"[Session] source planner ready: candidates={len(plan_candidates)} mode={question_source_mode or 'n/a'}")
+        except asyncio.TimeoutError:
+            print("[Session] source planner timed out after 8s, continuing with default flow")
+        except Exception as exc:
+            print(f"[Session] source planner unavailable, continuing with default flow: {exc}")
+
+        # ── Generate greeting and closing lines ──────────────────────────────────
+        opening_line = plan_opening_line or f"Hi {candidate_name or 'there'}, thanks for joining us today. Let's get started with an interview focused on {role or interview_type} and the role fit for {company or 'your target company'}."
+        closing_line = plan_closing_line or "Thank you so much for interviewing with us today. We really appreciate your time, and we'll share the next steps soon."
+
+        self.state.update({
+            "user_id": user_id,
+            "session_id": session_id,
+            "context_summary": context,
+            "has_jd": bool(jd_text and jd_text.strip()),
+            "interview_type": interview_type,
+            "role": role,
+            "company": company,
+            "history": [],
+            "performance_summary": (
+                f"Interview starting. Candidate: {candidate_name or 'unknown'}. "
+                f"Role: {role or 'not specified'}. Round: {interview_type}. "
+                f"No answers evaluated yet."
+            ),
+            "skills_remaining": initial_skills,
+            "skills_covered": [],
+            "ended": False,
+            "end_reason": "",
+            # Accuracy fields
+            "questions_asked": [],
+            "current_question": "",
+            "follow_up_hint": "",
+            "is_developer_role": is_developer,
+            "coding_questions_asked": 0,
+            "last_question_was_coding": False,
+            "turn_number": 0,
+            "last_answer_type": "not_applicable",
+            "consecutive_non_answers": 0,
+            "consecutive_disengaged": 0,
+            "max_questions": max_q,
+            "max_questions_per_topic": _max_questions_per_topic(duration),
+            "max_confusion_retries": _max_confusion_retries_for_duration(duration),
+            "topic_question_counts": {},
+            "input_tokens": self.input_tokens,
+            "output_tokens": self.output_tokens,
+            "opening_line": opening_line,
+            "closing_line": closing_line,
+            "source_question_candidates": plan_candidates,
+            "question_source_mode": question_source_mode,
+            "must_ask_coding_question": must_ask_coding_question,
+            "needs_coding_question": must_ask_coding_question,
+        })
 
     def get_time_context(self) -> str:
-        """Generate time context string for the Gemini prompt."""
         if self.duration_limit <= 0 or self.start_time <= 0:
             return ""
-
         elapsed = time.time() - self.start_time
         elapsed_min = elapsed / 60.0
-        total_min = self.duration_limit
-        remaining = total_min - elapsed_min
-
+        remaining = self.duration_limit - elapsed_min
         elapsed_str = f"{int(elapsed_min)}m {int(elapsed % 60)}s"
+        pct = elapsed_min / self.duration_limit
 
         if remaining <= 0:
-            return f"TIME: Elapsed {elapsed_str} | Target was {total_min} min | OVER TIME — wrap up now."
-        elif remaining <= 3:
-            return f"TIME: Elapsed {elapsed_str} | Remaining ~{remaining:.0f} min | STATUS: WRAPPING UP — ask one final question or closing remark."
-        else:
-            return f"TIME: Elapsed {elapsed_str} | Remaining ~{remaining:.0f} min | Target: {total_min} min"
+            return f"⏰ TIME UP ({elapsed_str} elapsed). CLOSE THE INTERVIEW NOW — set action=END immediately."
+        if pct >= 0.90:
+            return (f"🚨 FINAL MINUTES: {elapsed_str} elapsed, only ~{int(remaining * 60)}s left of {self.duration_limit}min. "
+                    f"Ask at most ONE more question then wrap up and set action=END.")
+        if pct >= 0.75:
+            return (f"⚠ Nearing end: {elapsed_str} elapsed, ~{int(remaining)}m remaining of {self.duration_limit}min. "
+                    f"Start steering toward a close — cover only the single most important topic left.")
+        return f"TIME: {elapsed_str} elapsed. ~{int(remaining)}m remaining of {self.duration_limit}min."
 
     async def stream_response(self, user_input: str = None):
-        """
-        Generates a structured response (Evaluation + Question) and yields the question text chunks.
-        """
-        if user_input:
-            self.history.append({"role": "user", "content": user_input})
-        
-        # 1. Generate Structured Question/Evaluation with time context
-        time_context = self.get_time_context()
-        evaluation = await self.client.generate_question(
-            self.history, self.context_summary, self.interview_type, time_context
-        )
-        
-        question_text = evaluation.next_step.question
+        # Soft time enforcement: Allow a 5-minute grace period beyond duration_limit
+        # before forcing a hard close. The AI is already prompted to wrap up 
+        # via get_time_context() in the graph.
+        if self.duration_limit > 0 and self.start_time > 0:
+            elapsed_min = (time.time() - self.start_time) / 60.0
+            if elapsed_min >= (self.duration_limit + 5):
+                closing = (
+                    "We've reached the absolute time limit for this session. "
+                    "Thank you so much for your time today — it was a productive conversation. "
+                    "I'll now begin generating your feedback report. Best of luck!"
+                )
+                self.state["ended"] = True
+                self.state["end_reason"] = "HARD_TIME_LIMIT"
+                yield {"type": "metadata", "is_coding": False}
+                chunk_size = 12
+                for i in range(0, len(closing), chunk_size):
+                    yield {"type": "text", "content": closing[i:i + chunk_size]}
+                    await asyncio.sleep(0.01)
+                self.state["history"].append({"role": "model", "content": closing})
+                return
 
-        # Check for ending condition
-        if evaluation.decision.action == Action.END:
-            self.ended = True
-            if len(question_text) < 5: 
-                question_text = "Thank you for your time. This concludes the interview."
+        # Update local state
+        self.state["last_user_input"] = user_input
+        self.state["time_context"] = self.get_time_context()
         
-        # 2. Simulate Streaming (Chunking) logic
-        chunk_size = 10
+        # Run the Optimized Graph
+        # This uses the running summary instead of full history for the LLM call
+        updated_state = await self.graph_engine.run_turn(self.state)
+        self.state = updated_state
+        
+        evaluation = self.state["current_evaluation"]
+        next_step = evaluation.get("next_step", {}) if isinstance(evaluation, dict) else getattr(evaluation, "next_step", {})
+        # Prefer canonical state question because run_turn may prepend greeting/closing there.
+        question_text = str(self.state.get("current_question", "") or "").strip()
+        if not question_text:
+            question_text = next_step.get("question", "") if isinstance(next_step, dict) else getattr(next_step, "question", "")
+        is_coding = next_step.get("is_coding_question", False) if isinstance(next_step, dict) else getattr(next_step, "is_coding_question", False)
+
+        if self.state["ended"]:
+            if len(question_text) < 5:
+                question_text = "Thank you for the conversation. We have covered the key areas. I'll pass my feedback to the team."
+            is_coding = False
+
+        # Yield metadata
+        yield {"type": "metadata", "is_coding": is_coding}
+
+        # Streaming Effect
+        chunk_size = 12
         for i in range(0, len(question_text), chunk_size):
-            chunk = question_text[i:i+chunk_size]
-            yield chunk
-            await asyncio.sleep(0.01) 
-            
-        self.history.append({"role": "model", "content": question_text})
+            yield {"type": "text", "content": question_text[i:i+chunk_size]}
+            await asyncio.sleep(0.01)
+
+        # run_turn already records the model question in history; avoid duplicate entries.
+        history = self.state.get("history", [])
+        if not history or history[-1].get("role") != "model" or history[-1].get("content") != question_text:
+            self.state["history"].append({"role": "model", "content": question_text})
+
+        # Real-time Reporting: Send current usage to backend after each turn
+        # This allows the admin dashboard to see cost/token growth in real-time
+        asyncio.create_task(self.report_usage(self.state.get("user_id") or "anonymous", self.state.get("session_id") or "demo"))
+
+    async def report_usage(self, user_id: str, session_id: str):
+        """Send token usage to the NestJS backend for analytics."""
+        from app.core.key_manager import key_manager
+        active_model = key_manager.get_gemini_model()
+        # Per-model pricing (USD per 1M tokens)
+        PRICING = {
+            "gemini-2.5-flash":    (0.10,  0.40),
+            "gemini-2.5-pro":      (1.25,  5.00),
+            "gemini-2.0-flash":    (0.10,  0.40),
+            "gemini-1.5-flash":    (0.075, 0.30),
+            "gemini-1.5-flash-8b": (0.0375, 0.15),
+        }
+        in_price, out_price = PRICING.get(active_model, (0.075, 0.30))
+        in_cost    = (self.input_tokens  / 1_000_000) * in_price
+        out_cost   = (self.output_tokens / 1_000_000) * out_price
+        total_cost = in_cost + out_cost
+
+        usage_data = {
+            "userId": user_id,
+            "sessionId": session_id,
+            "model": active_model,
+            "inputTokens": self.input_tokens,
+            "outputTokens": self.output_tokens,
+            "totalTokens": self.input_tokens + self.output_tokens,
+            "costUsd": total_cost,
+            "inputCostUsd": in_cost,
+            "outputCostUsd": out_cost,
+            "subscriptionStatus": "free",  # Backend will refine from user DB
+            "source": "interview",
+            "interviewType": self.state.get("interview_type", ""),
+            "role": self.state.get("role", ""),
+            "company": self.state.get("company", ""),
+            "endReason": self.state.get("end_reason", ""),
+            "isVertex": self.is_vertex,
+            "ragTokens": self.rag_tokens,
+        }
+
+        target_url = f"{settings.BACKEND_URL}/analytics/ai-usage"
+        print(f"[AI] Reporting usage to {target_url}  in={self.input_tokens}, out={self.output_tokens}")
+        try:
+            async with httpx.AsyncClient() as client:
+                response = await client.post(
+                    target_url,
+                    json=usage_data,
+                    timeout=5.0
+                )
+                response.raise_for_status()
+            print(f"[AI] Usage reported OK: in={self.input_tokens}, out={self.output_tokens}, total={self.input_tokens + self.output_tokens} tokens for user {user_id} ({self.state.get('interview_type', '')})")
+        except Exception as e:
+            print(f"[AI] Failed to report usage to {target_url}: {type(e).__name__}: {e}")

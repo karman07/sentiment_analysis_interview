@@ -82,6 +82,8 @@ async function fetchApiFormData(endpoint: string, formData: FormData, method = '
     return res.json();
 }
 
+export { fetchApi as fetchApiAuth };
+
 // Auth
 export const authApi = {
     login: (email: string, password: string) =>
@@ -147,4 +149,13 @@ export const quizzesApi = {
     getById: (id: string) => fetchApi(`quizzes/${id}`),
     create: (data: any) => fetchApi('quizzes', { method: 'POST', body: JSON.stringify(data) }),
     delete: (id: string) => fetchApi(`quizzes/${id}`, { method: 'DELETE' }),
+};
+
+// Jobs
+export const jobsApi = {
+    getStats: () => fetchApi('jobs/admin/stats'),
+    getConfig: () => fetchApi('jobs/admin/config'),
+    updateConfig: (data: any) => fetchApi('jobs/admin/config', { method: 'POST', body: JSON.stringify(data) }),
+    syncNow: () => fetchApi('jobs/sync-now'),
+    syncCountry: (country: string) => fetchApi(`jobs/sync-country/${country}`),
 };
